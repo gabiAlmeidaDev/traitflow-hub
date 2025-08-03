@@ -10,7 +10,11 @@ import {
   PieChart,
   ChevronLeft,
   ChevronRight,
+  Shield,
+  LogOut,
+  User
 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   Sidebar,
   SidebarContent,
@@ -25,50 +29,66 @@ import {
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 
-const navigationItems = [
-  {
-    title: "Dashboard",
-    url: "/",
-    icon: BarChart3,
-    description: "Visão geral e métricas"
-  },
-  {
-    title: "Testes",
-    url: "/testes",
-    icon: ClipboardList,
-    description: "Gerenciar testes de personalidade"
-  },
-  {
-    title: "Candidatos",
-    url: "/candidatos",
-    icon: Users,
-    description: "Base de candidatos"
-  },
-  {
-    title: "Batches",
-    url: "/batches",
-    icon: Layers,
-    description: "Grupos de testes"
-  },
-  {
-    title: "Relatórios",
-    url: "/relatorios",
-    icon: FileText,
-    description: "Analytics e resultados"
-  },
-  {
-    title: "Configurações",
-    url: "/configuracoes",
-    icon: Settings,
-    description: "Preferências do sistema"
-  },
-];
+const getNavigationItems = (isSuperAdmin: boolean) => {
+  const baseItems = [
+    {
+      title: "Dashboard",
+      url: "/",
+      icon: BarChart3,
+      description: "Visão geral e métricas"
+    },
+    {
+      title: "Testes",
+      url: "/testes",
+      icon: ClipboardList,
+      description: "Gerenciar testes de personalidade"
+    },
+    {
+      title: "Candidatos",
+      url: "/candidatos",
+      icon: Users,
+      description: "Base de candidatos"
+    },
+    {
+      title: "Batches",
+      url: "/batches",
+      icon: Layers,
+      description: "Grupos de testes"
+    },
+    {
+      title: "Relatórios",
+      url: "/relatorios",
+      icon: FileText,
+      description: "Analytics e resultados"
+    },
+    {
+      title: "Configurações",
+      url: "/configuracoes",
+      icon: Settings,
+      description: "Preferências do sistema"
+    },
+  ];
+
+  if (isSuperAdmin) {
+    baseItems.push({
+      title: "Admin",
+      url: "/admin",
+      icon: Shield,
+      description: "Painel administrativo"
+    });
+  }
+
+  return baseItems;
+};
 
 export function AppSidebar() {
   const { state } = useSidebar();
+  const { profile, signOut, isSuperAdmin } = useAuth();
   const location = useLocation();
   const currentPath = location.pathname;
   const collapsed = state === "collapsed";
+  
+  const navigationItems = getNavigationItems(isSuperAdmin);
 
   const isActive = (path: string) => {
     if (path === "/") return currentPath === "/";
@@ -144,21 +164,31 @@ export function AppSidebar() {
 
         {/* Bottom section */}
         <div className="mt-auto p-4 border-t border-sidebar-border">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
-              <span className="text-sm font-medium text-muted-foreground">
-                TR
-              </span>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
+                <User className="w-4 h-4 text-muted-foreground" />
+              </div>
+              {!collapsed && (
+                <div className="animate-in slide-in-from-left-2 duration-200">
+                  <p className="text-sm font-medium text-sidebar-foreground">
+                    {profile?.nome_completo || 'Usuário'}
+                  </p>
+                  <p className="text-xs text-sidebar-foreground/60">
+                    {profile?.papel === 'super_admin' ? 'Super Admin' : 
+                     profile?.papel === 'admin_empresa' ? 'Admin' : 'Usuário'}
+                  </p>
+                </div>
+              )}
             </div>
             {!collapsed && (
-              <div className="animate-in slide-in-from-left-2 duration-200">
-                <p className="text-sm font-medium text-sidebar-foreground">
-                  Test Account
-                </p>
-                <p className="text-xs text-sidebar-foreground/60">
-                  admin@traitview.com
-                </p>
-              </div>
+              <button
+                onClick={signOut}
+                className="p-1 hover:bg-muted rounded"
+                title="Sair"
+              >
+                <LogOut className="w-4 h-4 text-muted-foreground" />
+              </button>
             )}
           </div>
         </div>
