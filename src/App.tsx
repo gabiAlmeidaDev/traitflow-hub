@@ -16,6 +16,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
+import TestePage from "./pages/TestePage";
 import AdminDashboard from "./pages/admin/Dashboard";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/auth/login" element={<Login />} />
             <Route path="/auth/register" element={<Register />} />
             <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+            <Route path="/teste/:linkUnico" element={<TestePage />} />
             
             {/* Protected Routes */}
             <Route path="/" element={
