@@ -124,15 +124,15 @@ export function AppSidebar() {
         </div>
 
         {/* Navigation */}
-        <SidebarGroup className="px-4 py-6">
+        <SidebarGroup className="px-4 py-8">
           <SidebarGroupLabel className={cn(
-            "text-sidebar-foreground/60 text-sm uppercase tracking-wider mb-4 font-semibold",
+            "text-sidebar-foreground/60 text-sm uppercase tracking-wider mb-6 font-semibold",
             collapsed && "hidden"
           )}>
             Navegação
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu className="space-y-2">
+            <SidebarMenu className="space-y-4">
               {navigationItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
