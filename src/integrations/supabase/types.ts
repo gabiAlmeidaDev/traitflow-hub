@@ -23,9 +23,11 @@ export type Database = {
           finalizado_em: string | null
           id: string
           iniciado_em: string | null
+          link_unico: string | null
           resultados: Json | null
           status: string | null
           teste_id: string
+          token_acesso: string | null
           updated_at: string
         }
         Insert: {
@@ -36,9 +38,11 @@ export type Database = {
           finalizado_em?: string | null
           id?: string
           iniciado_em?: string | null
+          link_unico?: string | null
           resultados?: Json | null
           status?: string | null
           teste_id: string
+          token_acesso?: string | null
           updated_at?: string
         }
         Update: {
@@ -49,9 +53,11 @@ export type Database = {
           finalizado_em?: string | null
           id?: string
           iniciado_em?: string | null
+          link_unico?: string | null
           resultados?: Json | null
           status?: string | null
           teste_id?: string
+          token_acesso?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -490,6 +496,45 @@ export type Database = {
           },
         ]
       }
+      questoes_teste: {
+        Row: {
+          created_at: string
+          empresa_id: string
+          id: string
+          opcoes: Json | null
+          ordem: number
+          pergunta: string
+          peso: number | null
+          teste_id: string
+          tipo: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          empresa_id: string
+          id?: string
+          opcoes?: Json | null
+          ordem: number
+          pergunta: string
+          peso?: number | null
+          teste_id: string
+          tipo?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          empresa_id?: string
+          id?: string
+          opcoes?: Json | null
+          ordem?: number
+          pergunta?: string
+          peso?: number | null
+          teste_id?: string
+          tipo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       testes: {
         Row: {
           configuracoes: Json | null
@@ -552,6 +597,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      generate_test_link: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       get_current_user_empresa_id: {
         Args: Record<PropertyKey, never>
         Returns: string
