@@ -2,66 +2,28 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Clock, User, ClipboardList, Send } from "lucide-react";
+import { RecentActivity as RecentActivityType } from "@/hooks/useDashboardData";
 
-const recentActivities = [
-  {
-    id: 1,
-    type: "test_completed",
-    user: "Ana Silva",
-    action: "concluiu o teste",
-    target: "Avaliação de Liderança",
-    time: "há 5 minutos",
-    status: "completed",
-  },
-  {
-    id: 2,
-    type: "batch_sent",
-    user: "Sistema",
-    action: "enviou batch",
-    target: "Avaliação Completa para João Santos",
-    time: "há 12 minutos",
-    status: "sent",
-  },
-  {
-    id: 3,
-    type: "test_started",
-    user: "Carlos Mendes",
-    action: "iniciou o teste",
-    target: "Perfil de Personalidade DISC",
-    time: "há 18 minutos",
-    status: "in_progress",
-  },
-  {
-    id: 4,
-    type: "candidate_added",
-    user: "Maria Costa",
-    action: "adicionou candidato",
-    target: "Pedro Oliveira",
-    time: "há 1 hora",
-    status: "added",
-  },
-  {
-    id: 5,
-    type: "test_created",
-    user: "Admin",
-    action: "criou novo teste",
-    target: "Avaliação de Soft Skills",
-    time: "há 2 horas",
-    status: "created",
-  },
-];
+interface RecentActivityProps {
+  activities: RecentActivityType[];
+}
 
 const getStatusBadge = (status: string) => {
   switch (status) {
     case "completed":
+    case "concluido":
       return <Badge variant="secondary" className="bg-success/10 text-success border-success/20">Concluído</Badge>;
     case "sent":
+    case "enviado":
       return <Badge variant="secondary" className="bg-info/10 text-info border-info/20">Enviado</Badge>;
     case "in_progress":
+    case "em_andamento":
       return <Badge variant="secondary" className="bg-warning/10 text-warning border-warning/20">Em Andamento</Badge>;
     case "added":
+    case "adicionado":
       return <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">Adicionado</Badge>;
     case "created":
+    case "criado":
       return <Badge variant="secondary" className="bg-info/10 text-info border-info/20">Criado</Badge>;
     default:
       return <Badge variant="outline">Desconhecido</Badge>;
@@ -84,7 +46,7 @@ const getActivityIcon = (type: string) => {
   }
 };
 
-export function RecentActivity() {
+export function RecentActivity({ activities }: RecentActivityProps) {
   return (
     <Card className="p-6">
       <div className="flex items-center justify-between mb-6">
@@ -97,7 +59,12 @@ export function RecentActivity() {
       </div>
       
       <div className="space-y-4">
-        {recentActivities.map((activity) => (
+        {activities.length === 0 ? (
+          <div className="text-center py-8">
+            <p className="text-muted-foreground">Nenhuma atividade recente encontrada</p>
+          </div>
+        ) : (
+          activities.map((activity) => (
           <div
             key={activity.id}
             className="flex items-start gap-4 p-3 rounded-lg hover:bg-muted/50 transition-colors duration-200"
@@ -129,7 +96,8 @@ export function RecentActivity() {
               </div>
             </div>
           </div>
-        ))}
+          ))
+        )}
       </div>
       
       <div className="mt-4 pt-4 border-t border-border">

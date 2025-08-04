@@ -103,7 +103,7 @@ export default function Relatorios() {
       </div>
 
       {/* Charts Section */}
-      <DashboardCharts />
+      <DashboardCharts data={null} />
 
       {/* Recent Reports */}
       <Card className="p-6">

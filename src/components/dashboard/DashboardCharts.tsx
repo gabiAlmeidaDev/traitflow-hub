@@ -12,33 +12,41 @@ import {
   BarChart,
   Bar,
 } from "recharts";
+import { ChartData } from "@/hooks/useDashboardData";
 
-// Sample data for charts
-const pieData = [
-  { name: "Extrovertido", value: 35, color: "hsl(var(--success))" },
-  { name: "Introvertido", value: 25, color: "hsl(var(--danger))" },
-  { name: "Analítico", value: 20, color: "hsl(var(--warning))" },
-  { name: "Criativo", value: 20, color: "hsl(var(--info))" },
-];
+interface DashboardChartsProps {
+  data: ChartData | null;
+}
 
-const lineData = [
-  { month: "Jan", testes: 24, candidatos: 18 },
-  { month: "Fev", testes: 32, candidatos: 28 },
-  { month: "Mar", testes: 28, candidatos: 22 },
-  { month: "Abr", testes: 45, candidatos: 38 },
-  { month: "Mai", testes: 52, candidatos: 45 },
-  { month: "Jun", testes: 48, candidatos: 42 },
-];
+export function DashboardCharts({ data }: DashboardChartsProps) {
+  // Default fallback data
+  const defaultPieData = [
+    { name: "Extrovertido", value: 35, color: "hsl(var(--success))" },
+    { name: "Introvertido", value: 25, color: "hsl(var(--danger))" },
+    { name: "Analítico", value: 20, color: "hsl(var(--warning))" },
+    { name: "Criativo", value: 20, color: "hsl(var(--info))" },
+  ];
 
-const barData = [
-  { trait: "Liderança", score: 85 },
-  { trait: "Comunicação", score: 78 },
-  { trait: "Criatividade", score: 92 },
-  { trait: "Análise", score: 67 },
-  { trait: "Trabalho em Equipe", score: 74 },
-];
+  const defaultLineData = [
+    { month: "Jan", testes: 0, candidatos: 0 },
+    { month: "Fev", testes: 0, candidatos: 0 },
+    { month: "Mar", testes: 0, candidatos: 0 },
+    { month: "Abr", testes: 0, candidatos: 0 },
+    { month: "Mai", testes: 0, candidatos: 0 },
+    { month: "Jun", testes: 0, candidatos: 0 },
+  ];
 
-export function DashboardCharts() {
+  const defaultBarData = [
+    { trait: "Liderança", score: 0 },
+    { trait: "Comunicação", score: 0 },
+    { trait: "Criatividade", score: 0 },
+    { trait: "Análise", score: 0 },
+    { trait: "Trabalho em Equipe", score: 0 },
+  ];
+
+  const pieData = data?.personalityDistribution || defaultPieData;
+  const lineData = data?.monthlyEvolution || defaultLineData;
+  const barData = data?.traitScores || defaultBarData;
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
       {/* Pie Chart - Distribuição de Personalidades */}
