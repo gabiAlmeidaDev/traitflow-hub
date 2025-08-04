@@ -2,3 +2,6 @@ project_id = "czrqnuitadoiwzewtvhs"
 
 [functions.send-test-notification]
 verify_jwt = false
+
+[functions.export-report]
+verify_jwt = true
