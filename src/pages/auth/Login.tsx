@@ -51,24 +51,31 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">TraitView</CardTitle>
-          <CardDescription>
-            Entre na sua conta para acessar a plataforma
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-20 left-20 w-72 h-72 bg-gradient-to-r from-primary/30 to-accent/30 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-accent/20 to-primary/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-info/20 to-success/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
+      </div>
+      
+      <Card className="w-full max-w-md relative z-10 animate-slide-up glass-effect">
+        <CardHeader className="space-y-2 text-center">
+          <CardTitle className="hero-title text-4xl">Bem-vindo de volta</CardTitle>
+          <CardDescription className="text-lg text-muted-foreground">
+            Entre na sua conta para continuar
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <Alert variant="destructive">
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
-
-            <div className="space-y-2">
-              <Label htmlFor="email">E-mail</Label>
+        <CardContent className="space-y-6">
+          {error && (
+            <Alert variant="destructive" className="rounded-2xl border-danger/30 bg-danger/10">
+              <AlertDescription className="text-danger-foreground">{error}</AlertDescription>
+            </Alert>
+          )}
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-3">
+              <Label htmlFor="email" className="text-lg font-semibold">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -77,60 +84,67 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={loading}
+                className="h-14 text-lg"
               />
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password">Senha</Label>
+            
+            <div className="space-y-3">
+              <Label htmlFor="password" className="text-lg font-semibold">Senha</Label>
               <div className="relative">
                 <Input
                   id="password"
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   placeholder="Digite sua senha"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   disabled={loading}
+                  className="h-14 text-lg pr-12"
                 />
                 <Button
                   type="button"
                   variant="ghost"
-                  size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  size="icon"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 hover:bg-transparent"
                   onClick={() => setShowPassword(!showPassword)}
                   disabled={loading}
                 >
                   {showPassword ? (
-                    <EyeOff className="h-4 w-4" />
+                    <EyeOff className="h-5 w-5" />
                   ) : (
-                    <Eye className="h-4 w-4" />
+                    <Eye className="h-5 w-5" />
                   )}
                 </Button>
               </div>
             </div>
-
-            <Button type="submit" className="w-full" disabled={loading}>
+            
+            <Button type="submit" className="w-full h-14 text-lg" disabled={loading}>
               {loading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <div className="flex items-center gap-2">
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                   Entrando...
-                </>
+                </div>
               ) : (
-                'Entrar'
+                "Entrar"
               )}
             </Button>
 
-            <div className="text-center space-y-2">
-              <Link 
-                to="/auth/forgot-password" 
-                className="text-sm text-muted-foreground hover:text-primary"
-              >
-                Esqueceu sua senha?
-              </Link>
-              <div className="text-sm text-muted-foreground">
-                Não tem uma conta?{' '}
-                <Link to="/auth/register" className="text-primary hover:underline">
-                  Cadastre-se
+            <div className="text-center space-y-4">
+              <div className="text-center">
+                <Link 
+                  to="/auth/forgot-password" 
+                  className="text-primary hover:text-primary-glow font-medium transition-colors duration-300"
+                >
+                  Esqueceu sua senha?
+                </Link>
+              </div>
+              <div className="text-center">
+                <span className="text-muted-foreground">Não tem uma conta? </span>
+                <Link 
+                  to="/auth/register" 
+                  className="text-primary hover:text-primary-glow font-semibold transition-colors duration-300"
+                >
+                  Cadastre-se aqui
                 </Link>
               </div>
             </div>

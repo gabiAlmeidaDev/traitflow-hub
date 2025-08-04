@@ -44,14 +44,20 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">Recuperar Senha</CardTitle>
-          <CardDescription>
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-16 left-16 w-72 h-72 bg-gradient-to-r from-info/30 to-primary/30 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-16 right-16 w-80 h-80 bg-gradient-to-r from-accent/20 to-info/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2.5s' }}></div>
+      </div>
+      
+      <Card className="w-full max-w-md relative z-10 animate-slide-up glass-effect">
+        <CardHeader className="space-y-2 text-center">
+          <CardTitle className="hero-title text-4xl">Recuperar senha</CardTitle>
+          <CardDescription className="text-lg text-muted-foreground">
             {sent 
               ? "E-mail de recuperação enviado"
-              : "Digite seu e-mail para receber as instruções"
+              : "Digite seu email para receber as instruções"
             }
           </CardDescription>
         </CardHeader>

@@ -79,24 +79,31 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">TraitView</CardTitle>
-          <CardDescription>
-            Crie sua conta para começar a usar a plataforma
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-10 right-10 w-80 h-80 bg-gradient-to-r from-success/30 to-info/30 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-10 left-10 w-96 h-96 bg-gradient-to-r from-warning/20 to-success/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }}></div>
+        <div className="absolute top-1/3 left-1/3 w-64 h-64 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
+      </div>
+      
+      <Card className="w-full max-w-md relative z-10 animate-slide-up glass-effect">
+        <CardHeader className="space-y-2 text-center">
+          <CardTitle className="hero-title text-4xl">Criar conta</CardTitle>
+          <CardDescription className="text-lg text-muted-foreground">
+            Preencha os dados para começar
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <Alert variant="destructive">
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
-
-            <div className="space-y-2">
-              <Label htmlFor="nome_completo">Nome Completo</Label>
+        <CardContent className="space-y-6">
+          {error && (
+            <Alert variant="destructive" className="rounded-2xl border-danger/30 bg-danger/10">
+              <AlertDescription className="text-danger-foreground">{error}</AlertDescription>
+            </Alert>
+          )}
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-3">
+              <Label htmlFor="nome_completo" className="text-lg font-semibold">Nome completo</Label>
               <Input
                 id="nome_completo"
                 name="nome_completo"
@@ -106,11 +113,12 @@ export default function Register() {
                 onChange={handleChange}
                 required
                 disabled={loading}
+                className="h-14 text-lg"
               />
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="email">E-mail</Label>
+            
+            <div className="space-y-3">
+              <Label htmlFor="email" className="text-lg font-semibold">Email</Label>
               <Input
                 id="email"
                 name="email"
@@ -120,84 +128,90 @@ export default function Register() {
                 onChange={handleChange}
                 required
                 disabled={loading}
+                className="h-14 text-lg"
               />
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password">Senha</Label>
+            
+            <div className="space-y-3">
+              <Label htmlFor="password" className="text-lg font-semibold">Senha</Label>
               <div className="relative">
                 <Input
                   id="password"
                   name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Mínimo 6 caracteres"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Digite uma senha forte"
                   value={formData.password}
                   onChange={handleChange}
                   required
                   disabled={loading}
+                  className="h-14 text-lg pr-12"
                 />
                 <Button
                   type="button"
                   variant="ghost"
-                  size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  size="icon"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 hover:bg-transparent"
                   onClick={() => setShowPassword(!showPassword)}
                   disabled={loading}
                 >
                   {showPassword ? (
-                    <EyeOff className="h-4 w-4" />
+                    <EyeOff className="h-5 w-5" />
                   ) : (
-                    <Eye className="h-4 w-4" />
+                    <Eye className="h-5 w-5" />
                   )}
                 </Button>
               </div>
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirmar Senha</Label>
+            
+            <div className="space-y-3">
+              <Label htmlFor="confirmPassword" className="text-lg font-semibold">Confirmar senha</Label>
               <div className="relative">
                 <Input
                   id="confirmPassword"
                   name="confirmPassword"
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  placeholder="Digite a senha novamente"
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="Confirme sua senha"
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
                   disabled={loading}
+                  className="h-14 text-lg pr-12"
                 />
                 <Button
                   type="button"
                   variant="ghost"
-                  size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  size="icon"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 hover:bg-transparent"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   disabled={loading}
                 >
                   {showConfirmPassword ? (
-                    <EyeOff className="h-4 w-4" />
+                    <EyeOff className="h-5 w-5" />
                   ) : (
-                    <Eye className="h-4 w-4" />
+                    <Eye className="h-5 w-5" />
                   )}
                 </Button>
               </div>
             </div>
-
-            <Button type="submit" className="w-full" disabled={loading}>
+            
+            <Button type="submit" className="w-full h-14 text-lg" disabled={loading}>
               {loading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <div className="flex items-center gap-2">
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                   Criando conta...
-                </>
+                </div>
               ) : (
-                'Criar Conta'
+                "Criar conta"
               )}
             </Button>
 
-            <div className="text-center text-sm text-muted-foreground">
-              Já tem uma conta?{' '}
-              <Link to="/auth/login" className="text-primary hover:underline">
-                Faça login
+            <div className="text-center">
+              <span className="text-muted-foreground">Já tem uma conta? </span>
+              <Link 
+                to="/auth/login" 
+                className="text-primary hover:text-primary-glow font-semibold transition-colors duration-300"
+              >
+                Entre aqui
               </Link>
             </div>
           </form>
