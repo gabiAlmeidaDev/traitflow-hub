@@ -76,7 +76,7 @@ export default function Batches() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Batches de Testes</h1>
+          <h1 className="text-2xl font-bold text-foreground">Batches de Testes</h1>
           <p className="text-muted-foreground">
             Gerencie grupos de testes enviados para candidatos
           </p>
@@ -90,19 +90,19 @@ export default function Batches() {
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
         <Card className="p-4">
-          <div className="text-2xl font-bold text-foreground">34</div>
+          <div className="text-xl font-bold text-foreground">34</div>
           <div className="text-sm text-muted-foreground">Total de Batches</div>
         </Card>
         <Card className="p-4">
-          <div className="text-2xl font-bold text-warning">8</div>
+          <div className="text-xl font-bold text-warning">8</div>
           <div className="text-sm text-muted-foreground">Em Andamento</div>
         </Card>
         <Card className="p-4">
-          <div className="text-2xl font-bold text-success">23</div>
+          <div className="text-xl font-bold text-success">23</div>
           <div className="text-sm text-muted-foreground">Concluídos</div>
         </Card>
         <Card className="p-4">
-          <div className="text-2xl font-bold text-info">94%</div>
+          <div className="text-xl font-bold text-info">94%</div>
           <div className="text-sm text-muted-foreground">Taxa de Conclusão</div>
         </Card>
       </div>

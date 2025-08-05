@@ -31,7 +31,7 @@ export function KPICard({
             {title}
           </h3>
           <div className="space-y-2">
-            <p className="text-4xl font-bold text-gradient animate-counter">
+            <p className="text-2xl font-bold text-gradient animate-counter">
               {value}
             </p>
             {subtitle && (

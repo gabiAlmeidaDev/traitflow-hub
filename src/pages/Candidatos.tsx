@@ -114,7 +114,7 @@ export default function Candidatos() {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Candidatos</h1>
+          <h1 className="text-2xl font-bold text-foreground">Candidatos</h1>
             <p className="text-muted-foreground">Gerencie sua base de candidatos</p>
           </div>
         </div>
@@ -133,7 +133,7 @@ export default function Candidatos() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Candidatos</h1>
+          <h1 className="text-2xl font-bold text-foreground">Candidatos</h1>
           <p className="text-muted-foreground">
             Gerencie sua base de candidatos
           </p>
@@ -153,15 +153,15 @@ export default function Candidatos() {
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Card className="p-4">
-          <div className="text-2xl font-bold text-foreground">{stats.total}</div>
+          <div className="text-xl font-bold text-foreground">{stats.total}</div>
           <div className="text-sm text-muted-foreground">Total de Candidatos</div>
         </Card>
         <Card className="p-4">
-          <div className="text-2xl font-bold text-warning">{stats.emAvaliacao}</div>
+          <div className="text-xl font-bold text-warning">{stats.emAvaliacao}</div>
           <div className="text-sm text-muted-foreground">Em Avaliação</div>
         </Card>
         <Card className="p-4">
-          <div className="text-2xl font-bold text-success">{stats.concluidos}</div>
+          <div className="text-xl font-bold text-success">{stats.concluidos}</div>
           <div className="text-sm text-muted-foreground">Avaliações Concluídas</div>
         </Card>
       </div>

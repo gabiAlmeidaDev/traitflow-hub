@@ -84,7 +84,7 @@ export default function Testes() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Testes</h1>
+          <h1 className="text-2xl font-bold text-foreground">Testes</h1>
           <p className="text-muted-foreground">
             Gerencie seus testes psicométricos
           </p>

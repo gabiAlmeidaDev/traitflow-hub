@@ -16,7 +16,7 @@ export default function Configuracoes() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-foreground">Configurações</h1>
+        <h1 className="text-2xl font-bold text-foreground">Configurações</h1>
         <p className="text-muted-foreground">
           Gerencie as preferências da sua conta e empresa
         </p>
@@ -165,22 +165,22 @@ export default function Configuracoes() {
                   <p className="text-sm text-muted-foreground">100 links por mês</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-2xl font-bold text-primary">R$ 149</p>
+                  <p className="text-xl font-bold text-primary">R$ 149</p>
                   <p className="text-sm text-muted-foreground">/mês</p>
                 </div>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-foreground">34</p>
+                  <p className="text-xl font-bold text-foreground">34</p>
                   <p className="text-sm text-muted-foreground">Links enviados este mês</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-foreground">66</p>
+                  <p className="text-xl font-bold text-foreground">66</p>
                   <p className="text-sm text-muted-foreground">Links restantes</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-success">94%</p>
+                  <p className="text-xl font-bold text-success">94%</p>
                   <p className="text-sm text-muted-foreground">Taxa de uso</p>
                 </div>
               </div>

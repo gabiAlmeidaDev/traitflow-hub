@@ -124,7 +124,7 @@ export default function AdminDashboard() {
     <div className="container mx-auto p-6 space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Painel Administrativo</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Painel Administrativo</h1>
           <p className="text-muted-foreground">
             Gerencie empresas, usuários e visualize métricas da plataforma
           </p>
@@ -140,7 +140,7 @@ export default function AdminDashboard() {
               <Building2 className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{metrics.totalEmpresas}</div>
+              <div className="text-xl font-bold">{metrics.totalEmpresas}</div>
             </CardContent>
           </Card>
 
@@ -150,7 +150,7 @@ export default function AdminDashboard() {
               <Activity className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{metrics.empresasAtivas}</div>
+              <div className="text-xl font-bold">{metrics.empresasAtivas}</div>
               <p className="text-xs text-muted-foreground">
                 {((metrics.empresasAtivas / metrics.totalEmpresas) * 100).toFixed(1)}% do total
               </p>
@@ -163,7 +163,7 @@ export default function AdminDashboard() {
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{metrics.totalUsuarios}</div>
+              <div className="text-xl font-bold">{metrics.totalUsuarios}</div>
             </CardContent>
           </Card>
 
@@ -173,7 +173,7 @@ export default function AdminDashboard() {
               <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">R$ {metrics.receitaMensal.toFixed(2)}</div>
+              <div className="text-xl font-bold">R$ {metrics.receitaMensal.toFixed(2)}</div>
               <p className="text-xs text-muted-foreground">
                 Calculado a partir das assinaturas ativas
               </p>
