@@ -71,7 +71,7 @@ All colors MUST be HSL for consistency across light/dark modes.
     --info-glow: 200 90% 70%;
 
     /* Modern sidebar */
-    --sidebar-background: 0 0% 100% / 0.8;
+    --sidebar-background: 220 20% 98%;
     --sidebar-foreground: 230 15% 25%;
     --sidebar-primary: 280 60% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
@@ -133,7 +133,7 @@ All colors MUST be HSL for consistency across light/dark modes.
     --ring: 280 60% 65%;
 
     /* Dark sidebar */
-    --sidebar-background: 240 15% 10% / 0.9;
+    --sidebar-background: 240 15% 10%;
     --sidebar-foreground: 220 15% 85%;
     --sidebar-primary: 280 60% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
@@ -351,4 +351,35 @@ All colors MUST be HSL for consistency across light/dark modes.
 
 .animate-glow {
   animation: glow 2s ease-in-out infinite;
+}
+
+/* Sidebar Navigation Styles */
+.sidebar-nav-item {
+  @apply flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 ease-smooth;
+  @apply text-sidebar-foreground/80 hover:text-sidebar-foreground;
+  @apply hover:bg-sidebar-accent/50 hover:shadow-sm;
+}
+
+.sidebar-nav-item.active {
+  @apply bg-primary/10 text-primary font-semibold;
+  @apply border border-primary/20 shadow-md;
+}
+
+.sidebar-nav-item:hover {
+  @apply transform scale-[1.02];
+}
+
+/* Glass effect for sidebar */
+.glass-effect {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+}
+
+/* Text gradient effect */
+.text-gradient {
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
