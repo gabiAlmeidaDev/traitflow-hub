@@ -1,208 +1,170 @@
-// src/pages/Dashboard.tsx - DASHBOARD FUNCIONAL
-import { useState, useEffect } from 'react';
-import { useAuth } from '@/hooks/useAuth';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
   Users, 
   FileText, 
+  TrendingUp, 
   Clock, 
-  TrendingUp,
-  Eye,
-  Download,
-  Plus
+  CheckCircle, 
+  AlertCircle,
+  Plus,
+  Eye
 } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
-// Dados mockados para desenvolvimento
-const mockData = {
-  totalCandidatos: 45,
-  testesAtivos: 8,
-  avaliacoesPendentes: 12,
-  taxaSucesso: 78,
-  recentActivities: [
+const Dashboard = () => {
+  const { user } = useAuth();
+
+  // Mock data - substitua por dados reais da API
+  const stats = {
+    totalCandidates: 248,
+    activeTests: 12,
+    completedEvaluations: 156,
+    pendingReviews: 23
+  };
+
+  const recentActivities = [
     {
       id: 1,
-      type: 'candidate',
-      message: 'Novo candidato João Silva cadastrado',
-      time: '5 min atrás'
+      type: 'test_completed',
+      message: 'João Silva completou avaliação técnica',
+      time: '2 min atrás',
+      status: 'completed'
     },
     {
       id: 2,
-      type: 'test',
-      message: 'Teste de JavaScript finalizado por Maria Santos',
-      time: '15 min atrás'
+      type: 'candidate_added',
+      message: 'Nova candidata adicionada: Maria Santos',
+      time: '15 min atrás',
+      status: 'new'
     },
     {
       id: 3,
-      type: 'evaluation',
-      message: 'Avaliação de Pedro Costa aprovada',
-      time: '1h atrás'
+      type: 'batch_created',
+      message: 'Lote "Desenvolvedores Q1 2025" criado',
+      time: '1h atrás',
+      status: 'info'
     }
-  ]
-};
-
-export default function Dashboard() {
-  const { user } = useAuth();
-  const [loading, setLoading] = useState(false);
-
-  console.log('📊 Dashboard renderizado para:', user?.email);
-
-  useEffect(() => {
-    // Simular carregamento de dados
-    setLoading(true);
-    const timer = setTimeout(() => setLoading(false), 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="p-6 space-y-6">
-        <div className="animate-pulse">
-          <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-24 bg-gray-200 rounded"></div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
+  ];
 
   return (
-    <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
-      {/* Header */}
-      <div className="flex justify-between items-center">
+    <div className="space-y-6">
+      {/* Welcome Header */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">
-            Dashboard
+          <h1 className="text-3xl font-bold tracking-tight">
+            Bem-vindo, {user?.user_metadata?.full_name || 'Usuário'}!
           </h1>
-          <p className="text-gray-600 mt-1">
-            Bem-vindo de volta, {user?.email?.split('@')[0]}! 👋
+          <p className="text-muted-foreground">
+            Aqui está um resumo das suas atividades de hoje
           </p>
         </div>
-        
-        <div className="flex gap-3">
-          <Button variant="outline" size="sm">
-            <Download className="h-4 w-4 mr-2" />
-            Exportar
-          </Button>
-          <Button size="sm">
-            <Plus className="h-4 w-4 mr-2" />
-            Novo Teste
+        <div className="flex gap-2">
+          <Button asChild>
+            <Link to="/candidates">
+              <Plus className="mr-2 h-4 w-4" />
+              Novo Candidato
+            </Link>
           </Button>
         </div>
       </div>
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="hover:shadow-lg transition-shadow">
+      {/* Stats Cards */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">
+            <CardTitle className="text-sm font-medium">
               Total de Candidatos
             </CardTitle>
-            <Users className="h-4 w-4 text-blue-600" />
+            <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900">
-              {mockData.totalCandidatos}
-            </div>
-            <p className="text-xs text-green-600 mt-1">
+            <div className="text-2xl font-bold">{stats.totalCandidates}</div>
+            <p className="text-xs text-muted-foreground">
               +12% desde o mês passado
             </p>
           </CardContent>
         </Card>
 
-        <Card className="hover:shadow-lg transition-shadow">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">
+            <CardTitle className="text-sm font-medium">
               Testes Ativos
             </CardTitle>
-            <FileText className="h-4 w-4 text-green-600" />
+            <FileText className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900">
-              {mockData.testesAtivos}
-            </div>
-            <p className="text-xs text-blue-600 mt-1">
-              3 criados esta semana
+            <div className="text-2xl font-bold">{stats.activeTests}</div>
+            <p className="text-xs text-muted-foreground">
+              +2 novos esta semana
             </p>
           </CardContent>
         </Card>
 
-        <Card className="hover:shadow-lg transition-shadow">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">
-              Avaliações Pendentes
+            <CardTitle className="text-sm font-medium">
+              Avaliações Concluídas
             </CardTitle>
-            <Clock className="h-4 w-4 text-yellow-600" />
+            <CheckCircle className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900">
-              {mockData.avaliacoesPendentes}
-            </div>
-            <p className="text-xs text-yellow-600 mt-1">
+            <div className="text-2xl font-bold">{stats.completedEvaluations}</div>
+            <p className="text-xs text-muted-foreground">
+              +18% de conclusão
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">
+              Revisões Pendentes
+            </CardTitle>
+            <AlertCircle className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{stats.pendingReviews}</div>
+            <p className="text-xs text-muted-foreground">
               Requer atenção
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="hover:shadow-lg transition-shadow">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">
-              Taxa de Sucesso
-            </CardTitle>
-            <TrendingUp className="h-4 w-4 text-purple-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-gray-900">
-              {mockData.taxaSucesso}%
-            </div>
-            <p className="text-xs text-purple-600 mt-1">
-              +5% desde o último mês
             </p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid gap-6 lg:grid-cols-3">
         {/* Recent Activities */}
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-blue-600" />
-              Atividades Recentes
-            </CardTitle>
+            <CardTitle>Atividades Recentes</CardTitle>
+            <CardDescription>
+              Últimas ações realizadas no sistema
+            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            {mockData.recentActivities.map((activity) => (
-              <div 
-                key={activity.id} 
-                className="flex items-start gap-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
-              >
-                <div className={`p-2 rounded-full ${
-                  activity.type === 'candidate' ? 'bg-blue-100' :
-                  activity.type === 'test' ? 'bg-green-100' : 'bg-purple-100'
-                }`}>
-                  {activity.type === 'candidate' && <Users className="h-4 w-4 text-blue-600" />}
-                  {activity.type === 'test' && <FileText className="h-4 w-4 text-green-600" />}
-                  {activity.type === 'evaluation' && <TrendingUp className="h-4 w-4 text-purple-600" />}
+          <CardContent>
+            <div className="space-y-4">
+              {recentActivities.map((activity) => (
+                <div key={activity.id} className="flex items-center space-x-4">
+                  <div className="flex-shrink-0">
+                    {activity.status === 'completed' && (
+                      <CheckCircle className="h-5 w-5 text-green-500" />
+                    )}
+                    {activity.status === 'new' && (
+                      <Plus className="h-5 w-5 text-blue-500" />
+                    )}
+                    {activity.status === 'info' && (
+                      <FileText className="h-5 w-5 text-orange-500" />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium">{activity.message}</p>
+                    <p className="text-sm text-muted-foreground">{activity.time}</p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm text-gray-900">{activity.message}</p>
-                  <p className="text-xs text-gray-500 mt-1">{activity.time}</p>
-                </div>
-                <Button variant="ghost" size="sm">
-                  <Eye className="h-4 w-4" />
-                </Button>
-              </div>
-            ))}
-            
-            <Button variant="outline" className="w-full mt-4">
-              Ver Todas as Atividades
-            </Button>
+              ))}
+            </div>
           </CardContent>
         </Card>
 
@@ -210,58 +172,43 @@ export default function Dashboard() {
         <Card>
           <CardHeader>
             <CardTitle>Ações Rápidas</CardTitle>
+            <CardDescription>
+              Acesso rápido às principais funcionalidades
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <Button className="w-full justify-start" variant="outline">
-              <Plus className="h-4 w-4 mr-2" />
-              Criar Novo Teste
+            <Button asChild className="w-full justify-start">
+              <Link to="/candidates">
+                <Users className="mr-2 h-4 w-4" />
+                Gerenciar Candidatos
+              </Link>
             </Button>
             
-            <Button className="w-full justify-start" variant="outline">
-              <Users className="h-4 w-4 mr-2" />
-              Adicionar Candidato
+            <Button asChild variant="outline" className="w-full justify-start">
+              <Link to="/tests">
+                <FileText className="mr-2 h-4 w-4" />
+                Criar Teste
+              </Link>
             </Button>
             
-            <Button className="w-full justify-start" variant="outline">
-              <FileText className="h-4 w-4 mr-2" />
-              Gerar Relatório
+            <Button asChild variant="outline" className="w-full justify-start">
+              <Link to="/reports">
+                <Eye className="mr-2 h-4 w-4" />
+                Ver Relatórios
+              </Link>
             </Button>
             
-            <Button className="w-full justify-start" variant="outline">
-              <Download className="h-4 w-4 mr-2" />
-              Exportar Dados
+            <Button asChild variant="outline" className="w-full justify-start">
+              <Link to="/batches">
+                <TrendingUp className="mr-2 h-4 w-4" />
+                Gerenciar Lotes
+              </Link>
             </Button>
           </CardContent>
         </Card>
       </div>
-
-      {/* Status Summary */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Resumo do Sistema</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-              <span className="text-sm text-gray-600">Sistema Online</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-              <span className="text-sm text-gray-600">8 Testes Ativos</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-              <span className="text-sm text-gray-600">12 Pendências</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Badge variant="secondary" className="text-xs">
-                Última atualização: agora
-              </Badge>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
-}
+};
+
+export default Dashboard;

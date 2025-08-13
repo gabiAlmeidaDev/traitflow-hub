@@ -1,27 +1,43 @@
 import { useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { useAuth } from '@/hooks/useAuth'
 import { Target } from 'lucide-react'
+// Se o seu hook vem mesmo de "@/hooks/useAuth", mantenha. Senão, use o AuthContext:
+import { useAuth } from '@/contexts/AuthContext' // << ajuste aqui se necessário
 
 export function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  
+
   const { signIn } = useAuth()
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  // se o usuário veio de uma rota protegida, o ProtectedRoute envia { from: location }
+  const from =
+    (location.state as any)?.from?.pathname && typeof (location.state as any).from.pathname === 'string'
+      ? (location.state as any).from.pathname
+      : '/dashboard' // fallback padrão
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError('')
-    
+
     try {
-      await signIn(email, password)
+      const { error } = await signIn(email, password)
+      if (error) {
+        setError(error.message ?? 'Credenciais inválidas')
+        return
+      }
+      // login ok → redireciona
+      navigate(from, { replace: true })
     } catch (err: any) {
-      setError(err.message || 'Erro ao fazer login')
+      setError(err?.message ?? 'Erro ao fazer login')
     } finally {
       setLoading(false)
     }
@@ -44,7 +60,7 @@ export function LoginPage() {
                 {error}
               </div>
             )}
-            
+
             <div>
               <Input
                 type="email"
@@ -52,9 +68,10 @@ export function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                disabled={loading}
               />
             </div>
-            
+
             <div>
               <Input
                 type="password"
@@ -62,14 +79,11 @@ export function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                disabled={loading}
               />
             </div>
-            
-            <Button 
-              type="submit" 
-              className="w-full"
-              disabled={loading}
-            >
+
+            <Button type="submit" className="w-full" disabled={loading}>
               {loading ? 'Entrando...' : 'Entrar'}
             </Button>
           </form>

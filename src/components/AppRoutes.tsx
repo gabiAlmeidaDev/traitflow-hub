@@ -1,6 +1,6 @@
-// src/components/AppRoutes.tsx - NOVO ARQUIVO
+// src/components/AppRoutes.tsx
 import { Routes, Route } from "react-router-dom";
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/contexts/AuthContext'; // << ajuste aqui
 import { ProtectedRoute } from "./auth/ProtectedRoute";
 import { AppLayout } from "./layout/AppLayout";
 
@@ -20,16 +20,14 @@ import AdminDashboard from "../pages/admin/Dashboard";
 
 export function AppRoutes() {
   const { loading, isAuthenticated } = useAuth();
-
   console.log('🔄 AppRoutes - Estado auth:', { loading, isAuthenticated });
 
-  // Loading state
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Carregando TalentAlign...</p>
+          <p className="text-gray-600">Carregando Traitview...</p>
         </div>
       </div>
     );
@@ -37,13 +35,13 @@ export function AppRoutes() {
 
   return (
     <Routes>
-      {/* Public Routes */}
+      {/* Public */}
       <Route path="/auth/login" element={<Login />} />
       <Route path="/auth/register" element={<Register />} />
       <Route path="/auth/forgot-password" element={<ForgotPassword />} />
       <Route path="/teste/:linkUnico" element={<TestePage />} />
 
-      {/* Protected Routes */}
+      {/* App */}
       <Route
         path="/"
         element={
@@ -52,7 +50,10 @@ export function AppRoutes() {
           </ProtectedRoute>
         }
       >
+        {/* Index ("/") */}
         <Route index element={<Dashboard />} />
+        {/* Alias "/dashboard" → mesmo Dashboard */}
+        <Route path="dashboard" element={<Dashboard />} />
         <Route path="testes" element={<Testes />} />
         <Route path="candidatos" element={<Candidatos />} />
         <Route path="batches" element={<Batches />} />
@@ -60,7 +61,7 @@ export function AppRoutes() {
         <Route path="configuracoes" element={<Configuracoes />} />
       </Route>
 
-      {/* Admin Routes */}
+      {/* Admin */}
       <Route
         path="/admin"
         element={
@@ -72,8 +73,9 @@ export function AppRoutes() {
         <Route index element={<AdminDashboard />} />
       </Route>
 
-      {/* Catch All */}
+      {/* 404 */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
+

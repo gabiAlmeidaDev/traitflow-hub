@@ -22,7 +22,7 @@ interface AppSidebarProps {
 const menuItems = [
   {
     title: 'Dashboard',
-    href: '/',
+    href: '/dashboard',
     icon: LayoutDashboard,
   },
   {
